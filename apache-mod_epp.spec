@@ -28,7 +28,7 @@ Requires:	apache >= 2.0.43
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
-%define		_sysconfdir	/etc/httpd
+%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR)
 
 %description
 This Apache 2.0 module implements the EPP over TCP protocol as defined
