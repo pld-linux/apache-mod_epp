@@ -15,7 +15,7 @@ Release:	1
 License:	Apache
 Group:		Networking/Daemons
 Source0:	http://dl.sourceforge.net/aepps/mod_%{mod_name}-%{version}.tar.gz
-# Source0-md5:	ce458a48f56cc857c808b71ec27f592d
+# Source0-md5:	7517dc6c8f135a88da82022b9d512801
 # XXX: to be added to docs?
 #Source1:	http://dl.sourceforge.net/aepps/epp-erd-20030122.tar.gz
 URL:		http://aepps.sourceforge.net/
