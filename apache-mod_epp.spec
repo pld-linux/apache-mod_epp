@@ -1,8 +1,6 @@
 #
 # TODO:
 # - example/minimal configuration file
-# - review XXX's
-# - better Summary
 #
 %include	/usr/lib/rpm/macros.perl
 %define		mod_name	epp
@@ -10,12 +8,12 @@
 Summary:	An EPP (Extensible Provisioning Protocol) implementation for Apache2
 Summary(pl):	Implementacja EPP (Extensible Provisioning Protocol) dla Apache2
 Name:		apache-mod_%{mod_name}
-Version:	1.0
+Version:	1.1
 Release:	1
 License:	Apache
 Group:		Networking/Daemons
 Source0:	http://dl.sourceforge.net/aepps/mod_%{mod_name}-%{version}.tar.gz
-# Source0-md5:	7517dc6c8f135a88da82022b9d512801
+# Source0-md5:	157780266ea623b752b999e7b15b42c6
 # XXX: to be added to docs?
 #Source1:	http://dl.sourceforge.net/aepps/epp-erd-20030122.tar.gz
 URL:		http://aepps.sourceforge.net/
@@ -23,7 +21,6 @@ BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.0.43
 BuildRequires:	rpm-perlprov
 Requires(post,preun):	%{apxs}
-# XXX: wouldn't requires_eq be more appropiate?
 Requires:	apache >= 2.0.43
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
