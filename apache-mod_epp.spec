@@ -1,4 +1,3 @@
-#
 # TODO:
 # - example/minimal configuration file
 #
@@ -8,14 +7,14 @@
 Summary:	An EPP (Extensible Provisioning Protocol) implementation for Apache2
 Summary(pl):	Implementacja EPP (Extensible Provisioning Protocol) dla Apache2
 Name:		apache-mod_%{mod_name}
-Version:	1.1
+Version:	1.2
 Release:	1
 License:	Apache
 Group:		Networking/Daemons
 Source0:	http://dl.sourceforge.net/aepps/mod_%{mod_name}-%{version}.tar.gz
-# Source0-md5:	157780266ea623b752b999e7b15b42c6
-# XXX: to be added to docs?
-#Source1:	http://dl.sourceforge.net/aepps/epp-erd-20030122.tar.gz
+# Source0-md5:	c21073a4025d79f3ac1c293b58132ed7
+Source1:	http://dl.sourceforge.net/aepps/epp-erd-20030122.tar.gz
+# Source1-md5:	3d7720410e83fe6e90742119892011e2
 URL:		http://aepps.sourceforge.net/
 BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.0.43
@@ -44,31 +43,35 @@ dotycz±cymi zarz±dzania sesj± z draft-ietf-provreg-epp-0(6|7).txt.
 pisanie serwera EPP jako zestawu skryptów CGI.
 
 %prep
-%setup -q -n mod_%{mod_name}-%{version}
+%setup -q -n mod_%{mod_name}-%{version} -a1
+sed -i -e 's#MD5_DIGESTSIZE#APR_MD5_DIGESTSIZE#g' *.c
 
 %build
 %{apxs} -c mod_%{mod_name}.c
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{/etc/httpd/httpd.conf,%{_examplesdir}/%{name}-%{version}}
 
-install -D .libs/mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}/mod_%{mod_name}.so
+libtool --mode=install install -D mod_%{mod_name}.la $RPM_BUILD_ROOT%{_pkglibdir}/mod_%{mod_name}.so
 install -D epptelnet.pl $RPM_BUILD_ROOT%{_bindir}/epptelnet.pl
-install -d $RPM_BUILD_ROOT%{_examplesdir}
+
 cp -r examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+
+echo 'LoadModule %{mod_name}_module modules/mod_%{mod_name}.so' > $RPM_BUILD_ROOT/etc/httpd/httpd.conf/68_mod_%{mod_name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%{apxs} -e -a -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
 if [ -f /var/lock/subsys/httpd ]; then
 	/etc/rc.d/init.d/httpd restart 1>&2
+else
+        echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache HTTP daemon."
 fi
 
 %preun
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
 	if [ -f /var/lock/subsys/httpd ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
@@ -76,7 +79,8 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README TODO
+%doc README TODO epp-erd*
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_pkglibdir}/*
+%attr(755,root,root) %{_pkglibdir}/*.so
 %{_examplesdir}/%{name}-%{version}
+%config %{_sysconfdir}/httpd.conf/*.conf
