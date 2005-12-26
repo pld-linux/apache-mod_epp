@@ -1,9 +1,8 @@
 # TODO:
 # - example/minimal configuration file
-#
-%include	/usr/lib/rpm/macros.perl
 %define		mod_name	epp
 %define 	apxs		/usr/sbin/apxs
+%include	/usr/lib/rpm/macros.perl
 Summary:	An EPP (Extensible Provisioning Protocol) implementation for Apache2
 Summary(pl):	Implementacja EPP (Extensible Provisioning Protocol) dla Apache2
 Name:		apache-mod_%{mod_name}
@@ -19,12 +18,11 @@ URL:		http://aepps.sourceforge.net/
 BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.0.43
 BuildRequires:	rpm-perlprov
-Requires(post,preun):	%{apxs}
-Requires:	apache >= 2.0.43
+Requires:	apache(modules-api) = %apache_modules_api
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
-%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR)
+%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
+%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR 2>/dev/null)
 
 %description
 This Apache 2.0 module implements the EPP over TCP protocol as defined
@@ -51,14 +49,16 @@ sed -i -e 's#MD5_DIGESTSIZE#APR_MD5_DIGESTSIZE#g' *.c
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/etc/httpd/httpd.conf,%{_examplesdir}/%{name}-%{version}}
+install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_bindir},%{_sysconfdir}/httpd.conf,%{_examplesdir}/%{name}-%{version}}
 
-libtool --mode=install install -D mod_%{mod_name}.la $RPM_BUILD_ROOT%{_pkglibdir}/mod_%{mod_name}.so
-install -D epptelnet.pl $RPM_BUILD_ROOT%{_bindir}/epptelnet.pl
+libtool --mode=install install mod_%{mod_name}.la $RPM_BUILD_ROOT%{_pkglibdir}
+rm -f $RPM_BUILD_ROOT%{_pkglibdir}/*.{l,}a
 
-cp -r examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install epptelnet.pl $RPM_BUILD_ROOT%{_bindir}
+cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
-echo 'LoadModule %{mod_name}_module modules/mod_%{mod_name}.so' > $RPM_BUILD_ROOT/etc/httpd/httpd.conf/68_mod_%{mod_name}.conf
+echo 'LoadModule %{mod_name}_module modules/mod_%{mod_name}.so' > \
+	$RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/68_mod_%{mod_name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -66,8 +66,6 @@ rm -rf $RPM_BUILD_ROOT
 %post
 if [ -f /var/lock/subsys/httpd ]; then
 	/etc/rc.d/init.d/httpd restart 1>&2
-else
-        echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache HTTP daemon."
 fi
 
 %preun
@@ -80,7 +78,7 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc README TODO epp-erd*
-%attr(755,root,root) %{_bindir}/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf/*_mod_%{mod_name}.conf
 %attr(755,root,root) %{_pkglibdir}/*.so
+%attr(755,root,root) %{_bindir}/*
 %{_examplesdir}/%{name}-%{version}
-%config %{_sysconfdir}/httpd.conf/*.conf
