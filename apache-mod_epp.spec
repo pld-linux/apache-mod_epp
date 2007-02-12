@@ -4,7 +4,7 @@
 %define 	apxs		/usr/sbin/apxs
 %include	/usr/lib/rpm/macros.perl
 Summary:	An EPP (Extensible Provisioning Protocol) implementation for Apache2
-Summary(pl):	Implementacja EPP (Extensible Provisioning Protocol) dla Apache2
+Summary(pl.UTF-8):   Implementacja EPP (Extensible Provisioning Protocol) dla Apache2
 Name:		apache-mod_%{mod_name}
 Version:	1.2
 Release:	1
@@ -33,13 +33,13 @@ of draft-ietf-provreg-epp-0(6|7).txt.
 This is *not* a full implementation of EPP, this module just makes it
 possible to write an EPP server as a set of CGI scripts.
 
-%description -l pl
-Ten modu³ Apache 2.0 jest implementacj± protoko³u EPP po TCP zgodn± z
-dokumentem draft-ietf-provreg-epp-tcp-05.txt oraz czê¶ciami
-dotycz±cymi zarz±dzania sesj± z draft-ietf-provreg-epp-0(6|7).txt.
+%description -l pl.UTF-8
+Ten moduÅ‚ Apache 2.0 jest implementacjÄ… protokoÅ‚u EPP po TCP zgodnÄ… z
+dokumentem draft-ietf-provreg-epp-tcp-05.txt oraz czÄ™Å›ciami
+dotyczÄ…cymi zarzÄ…dzania sesjÄ… z draft-ietf-provreg-epp-0(6|7).txt.
 
-*Nie* jest to pe³na implementacja EPP, ten modu³ jedynie umo¿liwia
-pisanie serwera EPP jako zestawu skryptów CGI.
+*Nie* jest to peÅ‚na implementacja EPP, ten moduÅ‚ jedynie umoÅ¼liwia
+pisanie serwera EPP jako zestawu skryptÃ³w CGI.
 
 %prep
 %setup -q -n mod_%{mod_name}-%{version} -a1
