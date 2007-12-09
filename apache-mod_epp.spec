@@ -15,7 +15,7 @@ Source0:	http://dl.sourceforge.net/aepps/mod_%{mod_name}-%{version}.tar.gz
 Source1:	http://dl.sourceforge.net/aepps/epp-erd-20030122.tar.gz
 # Source1-md5:	3d7720410e83fe6e90742119892011e2
 URL:		http://aepps.sourceforge.net/
-BuildRequires:	apache-apxs >= 2.0.43
+BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.0.43
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.268
