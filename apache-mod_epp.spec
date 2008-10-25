@@ -9,7 +9,7 @@ Name:		apache-mod_%{mod_name}
 Version:	1.2
 Release:	1
 License:	Apache
-Group:		Networking/Daemons
+Group:		Networking/Daemons/HTTP
 Source0:	http://dl.sourceforge.net/aepps/mod_%{mod_name}-%{version}.tar.gz
 # Source0-md5:	c21073a4025d79f3ac1c293b58132ed7
 Source1:	http://dl.sourceforge.net/aepps/epp-erd-20030122.tar.gz
