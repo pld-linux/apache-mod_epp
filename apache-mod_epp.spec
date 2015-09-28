@@ -10,10 +10,10 @@ Version:	1.10
 Release:	0.2
 License:	Apache
 Group:		Networking/Daemons/HTTP
-Source0:	http://dl.sourceforge.net/aepps/%{version}/mod_%{mod_name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/aepps/mod_%{mod_name}-%{version}.tar.gz
 # Source0-md5:	1418187bf2b478ef2769271000f2b2c8
-Source1:	http://dl.sourceforge.net/aepps/20030122/epp-erd-20030122.tar.gz
-# Source1-md5:	6c20f40dce10db638e19af17904854df
+Source1:	http://downloads.sourceforge.net/aepps/epp-erd-20030122.tar.gz
+# Source1-md5:	3d7720410e83fe6e90742119892011e2
 URL:		http://aepps.sourceforge.net/
 BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.0.43
