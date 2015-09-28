@@ -6,14 +6,14 @@
 Summary:	An EPP (Extensible Provisioning Protocol) implementation for Apache2
 Summary(pl.UTF-8):	Implementacja EPP (Extensible Provisioning Protocol) dla Apache2
 Name:		apache-mod_%{mod_name}
-Version:	1.2
-Release:	1
+Version:	1.10
+Release:	0.1
 License:	Apache
 Group:		Networking/Daemons/HTTP
 Source0:	http://dl.sourceforge.net/aepps/mod_%{mod_name}-%{version}.tar.gz
-# Source0-md5:	c21073a4025d79f3ac1c293b58132ed7
+# Source0-md5:	1418187bf2b478ef2769271000f2b2c8
 Source1:	http://dl.sourceforge.net/aepps/epp-erd-20030122.tar.gz
-# Source1-md5:	3d7720410e83fe6e90742119892011e2
+# Source1-md5:	6c20f40dce10db638e19af17904854df
 URL:		http://aepps.sourceforge.net/
 BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.0.43
