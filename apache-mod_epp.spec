@@ -2,7 +2,6 @@
 # - example/minimal configuration file
 %define		mod_name	epp
 %define 	apxs		/usr/sbin/apxs
-%include	/usr/lib/rpm/macros.perl
 Summary:	An EPP (Extensible Provisioning Protocol) implementation for Apache2
 Summary(pl.UTF-8):	Implementacja EPP (Extensible Provisioning Protocol) dla Apache2
 Name:		apache-mod_%{mod_name}
